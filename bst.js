@@ -1,14 +1,22 @@
 export class Node {
-  constructor(value, leftChild, rightChild) {
+  constructor(value, left = null, right = null) {
     this.value = value;
-    this.leftChild = leftChild;
-    this.rightChild = rightChild;
+    this.left = left;
+    this.right = right;
   }
 }
 
 export class Tree {
-  constructor(root) {
+  constructor(root = null) {
     this.root = root;
+  }
+
+  prettyPrint(node = this.root, prefix = "", isLeft = true) {
+    if (!node) return;
+
+    this.prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
+    console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
+    this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 }
 
@@ -18,18 +26,22 @@ function buildTree(array) {
   const uniqueArray = [...new Set(array)];
   const sortedArray = uniqueArray.toSorted((a, b) => a - b);
 
-  console.log(sortedArray);
+  const root = sortedArrayToBSTRecur(sortedArray, 0, sortedArray.length - 1);
+
+  return new Tree(root);
 }
 
-buildTree(arr);
+function sortedArrayToBSTRecur(array, start, end) {
+  if (start > end) return null;
 
-// Print the tree in a structured format
-const prettyPrint = (node, prefix = "", isLeft = true) => {
-  if (node === null || node === undefined) {
-    return;
-  }
+  let mid = start + Math.floor((end - start) / 2);
+  let root = new Node(array[mid]);
 
-  prettyPrint(node.right, `${prefix}${isLeft ? "│   " : "    "}`, false);
-  console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.data}`);
-  prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
-};
+  root.left = sortedArrayToBSTRecur(array, start, mid - 1);
+  root.right = sortedArrayToBSTRecur(array, mid + 1, end);
+
+  return root;
+}
+
+const tree = buildTree(arr);
+console.log(tree.prettyPrint());
