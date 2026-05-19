@@ -16,7 +16,9 @@ const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 
 function buildTree(array) {
   const uniqueArray = [...new Set(array)];
-  console.log(uniqueArray);
+  const sortedArray = uniqueArray.toSorted((a, b) => a - b);
+
+  console.log(sortedArray);
 }
 
 buildTree(arr);
