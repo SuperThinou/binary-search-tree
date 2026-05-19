@@ -5,3 +5,9 @@ export class Node {
     this.rightChild = rightChild;
   }
 }
+
+export class Tree {
+  constructor(root) {
+    this.root = root;
+  }
+}
