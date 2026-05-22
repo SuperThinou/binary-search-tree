@@ -21,6 +21,7 @@ export class Tree {
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+const randomArr = generateRandomArray();
 
 function buildTree(array) {
   const uniqueArray = [...new Set(array)];
@@ -43,5 +44,18 @@ function sortedArrayToBSTRecur(array, start, end) {
   return root;
 }
 
-const tree = buildTree(arr);
+function generateRandomArray() {
+  const length = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
+
+  const array = [];
+
+  for (let i = 0; i < length; i++) {
+    const randomNumber = Math.floor(Math.random() * 10001);
+    array.push(randomNumber);
+  }
+
+  return array;
+}
+
+const tree = buildTree(randomArr);
 console.log(tree.prettyPrint());
