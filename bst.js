@@ -38,6 +38,10 @@ export class Tree {
   #insertRec(value, node) {
     if (!node) return new Node(value);
 
+    if (value === node.value) {
+      return node; // ignore doublon
+    }
+
     if (value < node.value) {
       node.left = this.#insertRec(value, node.left);
     } else {
