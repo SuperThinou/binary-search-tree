@@ -18,6 +18,18 @@ export class Tree {
     console.log(`${prefix}${isLeft ? "└── " : "┌── "}${node.value}`);
     this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
+
+  includes(value, node = this.root) {
+    if (!node) return false;
+
+    if (value === node.value) return true;
+
+    if (value < node.value) {
+      return this.includes(value, node.left);
+    }
+
+    return this.includes(value, node.right);
+  }
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -57,5 +69,7 @@ function generateRandomArray() {
   return array;
 }
 
-const tree = buildTree(randomArr);
+const tree = buildTree(arr);
 console.log(tree.prettyPrint());
+console.log(tree.includes(80));
+console.log(tree.includes(23));
