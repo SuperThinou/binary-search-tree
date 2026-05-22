@@ -30,6 +30,22 @@ export class Tree {
 
     return this.includes(value, node.right);
   }
+
+  insert(value) {
+    this.root = this.#insertRec(value, this.root);
+  }
+
+  #insertRec(value, node) {
+    if (!node) return new Node(value);
+
+    if (value < node.value) {
+      node.left = this.#insertRec(value, node.left);
+    } else {
+      node.right = this.#insertRec(value, node.right);
+    }
+
+    return node;
+  }
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -71,5 +87,5 @@ function generateRandomArray() {
 
 const tree = buildTree(arr);
 console.log(tree.prettyPrint());
-console.log(tree.includes(80));
-console.log(tree.includes(23));
+tree.insert(50);
+console.log(tree.prettyPrint());
