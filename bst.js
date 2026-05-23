@@ -77,6 +77,30 @@ export class Tree {
 
     return root;
   }
+
+  levelOrderForEach(callback) {
+    if (!callback) {
+      throw new Error("A callback is required");
+    }
+
+    if (!this.root) return;
+
+    const queue = [this.root];
+
+    while (queue.length > 0) {
+      const node = queue.shift();
+
+      callback(node.value);
+
+      if (node.left) {
+        queue.push(node.left);
+      }
+
+      if (node.right) {
+        queue.push(node.right);
+      }
+    }
+  }
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -120,4 +144,4 @@ const tree = buildTree(arr);
 console.log(tree.prettyPrint());
 tree.insert(50);
 tree.root = tree.deleteItem(tree.root, 23);
-console.log(tree.prettyPrint());
+tree.root = tree.levelOrderForEach(console.log);
