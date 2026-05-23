@@ -57,13 +57,13 @@ export class Tree {
     return curr;
   }
 
-  delNode(root, x) {
+  deleteItem(root, x) {
     if (root === null) return root;
 
     if (root.value > x) {
-      root.left = this.delNode(root.left, x);
+      root.left = this.deleteItem(root.left, x);
     } else if (root.value < x) {
-      root.right = this.delNode(root.right, x);
+      root.right = this.deleteItem(root.right, x);
     } else {
       // Node with 0 or 1 child
       if (root.left === null) return root.right;
@@ -72,7 +72,7 @@ export class Tree {
       // Node with 2 children
       const succ = this.getSuccessor(root);
       root.value = succ.value;
-      root.right = this.delNode(root.right, succ.value);
+      root.right = this.deleteItem(root.right, succ.value);
     }
 
     return root;
@@ -119,5 +119,5 @@ function generateRandomArray() {
 const tree = buildTree(arr);
 console.log(tree.prettyPrint());
 tree.insert(50);
-tree.root = tree.delNode(tree.root, 8);
+tree.root = tree.deleteItem(tree.root, 23);
 console.log(tree.prettyPrint());
