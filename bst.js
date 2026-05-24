@@ -114,6 +114,20 @@ export class Tree {
     this.preOrderForEach(callback, node.left);
     this.preOrderForEach(callback, node.right);
   }
+
+  inOrderForEach(callback, node = this.root) {
+    if (!callback) {
+      throw new Error("A callback is required");
+    }
+
+    if (node === null) return;
+
+    this.inOrderForEach(callback, node.left);
+
+    callback(node.value);
+
+    this.inOrderForEach(callback, node.right);
+  }
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -157,4 +171,4 @@ const tree = buildTree(arr);
 console.log(tree.prettyPrint());
 tree.insert(50);
 tree.root = tree.deleteItem(tree.root, 23);
-tree.root = tree.preOrderForEach(console.log);
+tree.root = tree.inOrderForEach(console.log);
