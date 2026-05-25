@@ -166,6 +166,33 @@ export class Tree {
 
     return 1 + Math.max(this._height(node.left), this._height(node.right));
   }
+
+  _inOrder(node, arr = []) {
+    if (!node) return arr;
+
+    this._inOrder(node.left, arr);
+    arr.push(node.value);
+    this._inOrder(node.right, arr);
+
+    return arr;
+  }
+
+  _rebuild(arr, start, end) {
+    if (start > end) return null;
+
+    const mid = Math.floor((start + end) / 2);
+    const node = new Node(arr[mid]);
+
+    node.left = this._rebuild(arr, start, mid - 1);
+    node.right = this._rebuild(arr, mid + 1, end);
+
+    return node;
+  }
+
+  rebalance() {
+    const sorted = this._inOrder(this.root, []);
+    this.root = this._rebuild(sorted, 0, sorted.length - 1);
+  }
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -209,5 +236,3 @@ const tree = buildTree(arr);
 console.log(tree.prettyPrint());
 tree.insert(50);
 tree.root = tree.deleteItem(tree.root, 23);
-console.log(tree.depth(8));
-console.log(tree.height(8));
