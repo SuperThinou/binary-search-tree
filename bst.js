@@ -19,16 +19,20 @@ export class Tree {
     this.prettyPrint(node.left, `${prefix}${isLeft ? "    " : "│   "}`, true);
   }
 
-  includes(value, node = this.root) {
-    if (!node) return false;
-
-    if (value === node.value) return true;
+  find(value, node = this.root) {
+    if (!node) return undefined;
 
     if (value < node.value) {
-      return this.includes(value, node.left);
+      return this.find(value, node.left);
+    } else if (value > node.value) {
+      return this.find(value, node.right);
     }
 
-    return this.includes(value, node.right);
+    return node;
+  }
+
+  includes(value) {
+    return !!this.find(value);
   }
 
   insert(value) {
@@ -155,14 +159,6 @@ export class Tree {
   }
 
   height(value, node = this.root) {
-    if (!node) return undefined;
-
-    if (value < node.value) {
-      return this.height(value, node.left);
-    } else if (value > node.value) {
-      return this.height(value, node.right);
-    }
-
     return this._height(node);
   }
   _height(node) {
