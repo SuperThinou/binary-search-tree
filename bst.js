@@ -243,14 +243,37 @@ function generateRandomArray() {
   const array = [];
 
   for (let i = 0; i < length; i++) {
-    const randomNumber = Math.floor(Math.random() * 10001);
+    const randomNumber = Math.floor(Math.random() * 101);
     array.push(randomNumber);
   }
 
   return array;
 }
 
-const tree = buildTree(arr);
-console.log(tree.prettyPrint());
-tree.insert(50);
-tree.root = tree.deleteItem(tree.root, 23);
+function script() {
+  const arr = generateRandomArray();
+  const tree = buildTree(arr);
+  console.log(tree.isBalanced());
+
+  printTree(tree);
+
+  tree.insert(105);
+  tree.insert(190);
+  tree.insert(212);
+  tree.insert(102);
+
+  console.log(tree.isBalanced());
+  tree.rebalance();
+  console.log(tree.isBalanced());
+
+  printTree(tree);
+}
+
+function printTree(tree) {
+  tree.levelOrderForEach(console.log);
+  tree.preOrderForEach(console.log);
+  tree.inOrderForEach(console.log);
+  tree.postOrderForEach(console.log);
+}
+
+script();
