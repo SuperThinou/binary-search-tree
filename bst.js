@@ -141,6 +141,18 @@ export class Tree {
 
     callback(node.value);
   }
+
+  depth(value, node = this.root, count = 0) {
+    if (!node) return undefined;
+
+    if (value === node.value) return count;
+
+    if (value < node.value) {
+      return this.depth(value, node.left, count + 1);
+    }
+
+    return this.depth(value, node.right, count + 1);
+  }
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -184,4 +196,4 @@ const tree = buildTree(arr);
 console.log(tree.prettyPrint());
 tree.insert(50);
 tree.root = tree.deleteItem(tree.root, 23);
-tree.root = tree.postOrderForEach(console.log);
+console.log("La prodondeur est de " + tree.depth(7));
