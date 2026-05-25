@@ -153,6 +153,23 @@ export class Tree {
 
     return this.depth(value, node.right, count + 1);
   }
+
+  height(value, node = this.root) {
+    if (!node) return undefined;
+
+    if (value < node.value) {
+      return this.height(value, node.left);
+    } else if (value > node.value) {
+      return this.height(value, node.right);
+    }
+
+    return this._height(node);
+  }
+  _height(node) {
+    if (!node) return -1;
+
+    return 1 + Math.max(this._height(node.left), this._height(node.right));
+  }
 }
 
 const arr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
@@ -196,4 +213,5 @@ const tree = buildTree(arr);
 console.log(tree.prettyPrint());
 tree.insert(50);
 tree.root = tree.deleteItem(tree.root, 23);
-console.log("La prodondeur est de " + tree.depth(7));
+console.log(tree.depth(8));
+console.log(tree.height(8));
