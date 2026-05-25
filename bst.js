@@ -167,6 +167,24 @@ export class Tree {
     return 1 + Math.max(this._height(node.left), this._height(node.right));
   }
 
+  isBalanced(node = this.root) {
+    return this._checkHeight(node) !== -1;
+  }
+
+  _checkHeight(node) {
+    if (!node) return 0;
+
+    const left = this._checkHeight(node.left);
+    if (left === -1) return -1;
+
+    const right = this._checkHeight(node.right);
+    if (right === -1) return -1;
+
+    if (Math.abs(left - right) > 1) return -1;
+
+    return 1 + Math.max(left, right);
+  }
+
   _inOrder(node, arr = []) {
     if (!node) return arr;
 
